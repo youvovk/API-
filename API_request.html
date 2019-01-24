@@ -104,7 +104,9 @@ function renderRepos(objJson){
       let myList = document.createElement('ul');
       let myRepos = document.createElement('li');
       
-      myRepos.textContent = 'Repository name: ' + elemReros.name + ' ' + 'Link: ' + elemReros['html_url'];
+      myRepos.textContent = `Repository name:  ${elemReros.name} 
+                            Link:  ${elemReros['html_url']} 
+                            Amount of stars: ${elemReros['stargazers_count']}`;
       
       myList.appendChild(myRepos);
       listRepos.appendChild(myList);
@@ -119,7 +121,8 @@ function renderFollow(objJson){
       let myFollowList = document.createElement('ul');
       let myFollow = document.createElement('li');
       
-      myFollow.textContent = 'User name: ' + elemFollows.login + ' ' + 'Link: ' + elemFollows['html_url'];
+      myFollow.textContent = `User name: ${elemFollows.login} 
+                              Link:  ${elemFollows['html_url']}`;
       
       myFollowList.appendChild(myFollow);
       listFollowers.appendChild(myFollowList);
