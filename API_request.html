@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  
+  <link rel="stylesheet" href="style.css">
+
+  
+</head>
+ <body>
+  <table cellspacing="0" cellpadding="0" id="maket">
+   <tr> 
+    <th id="leftcol">
+      <form id="formLeftCol">
+        <button id="buttonRepos">
+        Get repos
+    </button>
+      </form>  
+    </th> 
+
+  <th id="rightcol">
+    <form id="formRightCol">
+      <button id="buttonFollowers">
+        Get followers
+      </button>
+    </form>
+  </th>
+   </tr>  
+   <tr>
+     <td id="leftcol2"> Место для репозиториев
+      <div id="listRepos">
+        
+      </div>>
+     </td>
+     <td id="rightcol2"> Место для подписчиков 
+      <div id="listAllow">
+        <div id="listFollowers">
+        
+        </div>>
+      </div>>
+     </td>
+   </tr>
+  </table>
+
+
+<script>
+let requestURLRepos = 'https://api.github.com/users/modestfake/repos';
+let requestURLFollow = 'https://api.github.com/users/modestfake/followers';
+
+let listRepos = document.getElementById("listRepos");
+let buttonRepos = document.getElementById("buttonRepos");
+let listFollowers = document.getElementById("listFollowers");
+let buttonFollowers = document.getElementById("buttonFollowers");
+
+    const loadRepos = url => {
+      return new Promise(function(resolve, reject) {
+    
+        let request = new XMLHttpRequest();
+        request.open('GET', url);
+        request.responseType = 'json';
+        request.onload = function() {
+          if (request.status === 200) {
+            resolve(request.response);
+          } 
+        };
+        request.send();
+      });
+    };
+
+    loadRepos(requestURLRepos).then(function(result){
+
+        buttonRepos.addEventListener("click", function(event){
+          event.preventDefault();
+          renderRepos(result)});      
+    });
+
+    const loadFollowers = url => {
+      return new Promise(function(resolve, reject) {
+    
+        let request = new XMLHttpRequest();
+        request.open('GET', url);
+        request.responseType = 'json';
+        request.onload = function() {
+          if (request.status === 200) {
+            resolve(request.response);
+          } 
+        };
+        request.send();
+      });
+    };
+
+    loadFollowers(requestURLFollow).then(function(result){
+    
+      buttonFollowers.addEventListener("click", function(event){
+          event.preventDefault();
+          renderFollow(result)});
+    })
+
+function renderRepos(objJson){
+  
+   objJson.forEach(elemReros => { 
+
+      let myList = document.createElement('ul');
+      let myRepos = document.createElement('li');
+      
+      myRepos.textContent = 'Repository name: ' + elemReros.name + ' ' + 'Link: ' + elemReros['html_url'];
+      
+      myList.appendChild(myRepos);
+      listRepos.appendChild(myList);
+      
+    })
+}
+
+function renderFollow(objJson){
+  
+   objJson.forEach(elemFollows => { 
+
+      let myFollowList = document.createElement('ul');
+      let myFollow = document.createElement('li');
+      
+      myFollow.textContent = 'User name: ' + elemFollows.login + ' ' + 'Link: ' + elemFollows['html_url'];
+      
+      myFollowList.appendChild(myFollow);
+      listFollowers.appendChild(myFollowList);
+      
+    })
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+#maket {
+    width: 50%; /* Ширина всей таблицы */
+   }
+   TH {
+    vertical-align: top; /* Вертикальное выравнивание в ячейках */
+    padding: 5px; /* Поля вокруг ячеек */
+   }
+TH#leftcol {
+    width: 450px; /* Ширина левой колонки */
+    background: #ccc; /* Цвет фона левой колонки */
+    border-right: 1px dashed #000; /* Параметры линии */
+    border: 1px solid #000;
+   }
+TH#rightcol {
+    background: #fc3; /* Цвет фона правой колонки */
+     border: 1px solid #000;
+   }
+TD#leftcol2 {
+    width: 450px; /* Ширина левой колонки */
+    background: #ccc; /* Цвет фона левой колонки */
+    border-right: 1px dashed #000; /* Параметры линии */
+    border: 1px solid #000;
+   }
+TD#rightcol2 {
+    background: #fc3; /* Цвет фона правой колонки */
+     border: 1px solid #000;
+   }
