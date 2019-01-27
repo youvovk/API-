@@ -53,49 +53,40 @@ let buttonRepos = document.getElementById("buttonRepos");
 let listFollowers = document.getElementById("listFollowers");
 let buttonFollowers = document.getElementById("buttonFollowers");
 
-    const loadRepos = url => {
-      return new Promise(function(resolve, reject) {
-    
-        let request = new XMLHttpRequest();
-        request.open('GET', url);
-        request.responseType = 'json';
-        request.onload = function() {
-          if (request.status === 200) {
-            resolve(request.response);
-          } 
-        };
-        request.send();
-      });
-    };
 
-    loadRepos(requestURLRepos).then(function(result){
 
-        buttonRepos.addEventListener("click", function(event){
-          event.preventDefault();
-          renderRepos(result)});      
+function get(url) {
+    return fetch(url, {
+      method: 'get'
     });
+}
+function getJSON(url, addRequestToApiGitHub) {
+    return get(url).then(function(response) {
+      // Handle network errors
+      if (!response.ok) {
+        throw Error(response.statusText ? response.statusText : 'Unknown network error')
+      }
 
-    const loadFollowers = url => {
-      return new Promise(function(resolve, reject) {
-    
-        let request = new XMLHttpRequest();
-        request.open('GET', url);
-        request.responseType = 'json';
-        request.onload = function() {
-          if (request.status === 200) {
-            resolve(request.response);
-          } 
-        };
-        request.send();
-      });
-    };
-
-    loadFollowers(requestURLFollow).then(function(result){
-    
-      buttonFollowers.addEventListener("click", function(event){
-          event.preventDefault();
-          renderFollow(result)});
+      return response.json();
     })
+    .then(function(response) {
+       addRequestToApiGitHub(response)
+       console.log(response)
+    })
+    .catch(function(err) {
+        console.log('Error') 
+    });
+}
+
+buttonRepos.addEventListener("click", function(event){
+          event.preventDefault();
+          getJSON(requestURLRepos, renderRepos)});
+
+buttonFollowers.addEventListener("click", function(event){
+          event.preventDefault();
+          getJSON(requestURLFollow, renderFollow)});
+
+
 
 function renderRepos(objJson){
   
@@ -128,7 +119,7 @@ function renderFollow(objJson){
       listFollowers.appendChild(myFollowList);
       
     })
-}
+ }
 </script>
 </body>
 </html>
